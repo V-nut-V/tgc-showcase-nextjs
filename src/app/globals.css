@@ -1,42 +1,57 @@
+html {
+  font-size: calc(0.3491379310344829rem + 0.6465517241379309vw);
+  box-sizing: border-box; 
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (max-width: 2840px) {
+    html {
+        font-size: calc(0.34913793103448276rem + 0.646551724137931vw);
+    }
+}
+
+@media screen and (max-width: 992px) {
+    html {
+        font-size: calc(0.5715399610136452rem + 1.01364522417154vw);
+    }
+}
+
+@media screen and (max-width: 479px) {
+    html {
+        font-size: calc(0.8747384937238494rem + 0.41841004184100417vw);
+    }
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --main-color: #333;
+  --sub-color: #676B73;
+  --main-bk-color: #fff;
+  --sub-bk-color: #E8EBF0;
 }
 
 * {
-  box-sizing: border-box;
   padding: 0;
   margin: 0;
+  list-style-type: none;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  font-family: "myFont", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+body {
+  width: 100%;
+  height: 100%;
+  color: var(--main-color);
+  background: #ffffff;
+  font-family: "myFont", sans-serif;
+  /* background: radial-gradient(circle,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(217, 242, 255, 1) 100%); */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
 }
