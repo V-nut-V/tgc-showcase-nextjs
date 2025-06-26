@@ -69,6 +69,10 @@ export const Popup = styled.div`
       flex-grow: 1;
       background-color: black;
 
+      &.no-description {
+        grid-template-columns: 1fr;
+      }
+
       .description {
         overflow-y: scroll;
         padding: 1rem;

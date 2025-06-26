@@ -11,18 +11,24 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
+  const [location, setLocation] = useState("zh");
 
   useEffect(() => {
     getProducts();
   }, []);
 
   const getProducts = async () => {
+    // Get the user's language preference from the browser
+    let params = new URLSearchParams(document.location.search);
+    let location = params.get("location");
+    if (!["zh", "en", "ko", "jp"].includes(location)) location = "zh";
+    
     const {
       data: { products },
     } = await client.query({
       query: gql`
-        query GetProducts($pagination: PaginationArg) {
-          products(pagination: $pagination) {
+        query GetProducts($pagination: PaginationArg, $locale: I18NLocaleCode) {
+          products(pagination: $pagination, locale: $locale) {
             documentId
             Name
             SKU
@@ -34,13 +40,13 @@ export default function Home() {
         }
       `,
       variables: {
+        locale: location,
         pagination: {
           limit: 9999,
         },
         status: "PUBLISHED",
       },
     });
-    console.log(products);
     setProducts(products);
   };
 
@@ -51,6 +57,7 @@ export default function Home() {
             <div
               className="image-wrapper"
               onClick={() => {
+                if (product?.Video_URL == null) return;
                 setCurrentProduct(product);
                 setShowPopup(true);
               }}
@@ -61,7 +68,7 @@ export default function Home() {
                 layoutId={product.SKU}
                 src={product.Image_URL}
               />
-              <FaSearch className="icon" color="#888" />
+              {product?.Video_URL && <FaSearch className="icon" color="#888" />}
             </div>
           ))
         : "Loading..."}

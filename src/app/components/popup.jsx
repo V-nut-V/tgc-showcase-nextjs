@@ -15,6 +15,7 @@ const PopupWindow = ({ product, closePopup }) => {
   const videoContainer = useRef(null);
 
   useEffect(() => {
+    console.log(product)
     setHeight(container.current.offsetHeight - topBar.current.offsetHeight);
     setWidth(videoContainer.current.offsetWidth);
   }, []);
@@ -38,7 +39,13 @@ const PopupWindow = ({ product, closePopup }) => {
             <IoClose />
           </button>
         </div>
-        <div className="content">
+        <div
+          className={`content ${
+            product?.Description[0]?.children[0]?.text != ""
+              ? ""
+              : "no-description"
+          }`}
+        >
           <div className="video-container" ref={videoContainer}>
             <ReactPlayer
               controls
@@ -48,14 +55,16 @@ const PopupWindow = ({ product, closePopup }) => {
               width={width}
               url={
                 product?.Video_URL ||
-                "https://cdn.shopify.com/videos/c/o/v/21ebbfb4f37a4c7da841d58a00c7244d.mp4"
+                "https://www.youtube.com/watch?v=FWepS03YbFU"
               }
             />
           </div>
-          <div className="description" style={{ height: height + 1 }}>
-            <p className="sku">SKU: {product?.SKU}</p>
-            <BlocksRenderer content={product?.Description} />
-          </div>
+          {product?.Description[0]?.children[0]?.text != "" && (
+            <div className="description" style={{ height: height + 1 }}>
+              <p className="sku">SKU: {product?.SKU}</p>
+              <BlocksRenderer content={product?.Description} />
+            </div>
+          )}
         </div>
       </div>
     </Popup>
