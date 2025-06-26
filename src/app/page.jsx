@@ -11,7 +11,6 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
-  const [location, setLocation] = useState("zh");
 
   useEffect(() => {
     getProducts();
