@@ -5,7 +5,8 @@ export const Popup = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +56,6 @@ export const Popup = styled.div`
         opacity: 0.4;
         transition: all 0.2s ease-out;
 
-
         &:hover {
           opacity: 0.8;
           transform: rotate(90deg);
@@ -68,6 +68,14 @@ export const Popup = styled.div`
       grid-template-columns: 3fr 1fr;
       flex-grow: 1;
       background-color: black;
+
+      @media only screen and (max-width: 900px) {
+        grid-template-columns: 1fr;
+
+        .description {
+          display: none;
+        }
+      }
 
       &.no-description {
         grid-template-columns: 1fr;

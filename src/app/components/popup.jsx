@@ -41,7 +41,7 @@ const PopupWindow = ({ product, closePopup }) => {
         </div>
         <div
           className={`content ${
-            product?.Description[0]?.children[0]?.text != ""
+            product.Description && product?.Description[0]?.children[0]?.text != ""
               ? ""
               : "no-description"
           }`}
@@ -59,7 +59,7 @@ const PopupWindow = ({ product, closePopup }) => {
               }
             />
           </div>
-          {product?.Description[0]?.children[0]?.text != "" && (
+          {product.Description && product?.Description[0]?.children[0]?.text != "" && (
             <div className="description" style={{ height: height + 1 }}>
               <p className="sku">SKU: {product?.SKU}</p>
               <BlocksRenderer content={product?.Description} />
