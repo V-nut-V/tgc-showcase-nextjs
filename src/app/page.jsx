@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import client from "@/lib/ApolloClient";
 import { gql } from "@apollo/client";
 import { motion } from "framer-motion";
@@ -11,6 +11,7 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
+  const scrollableRef = useRef(null);
 
   useEffect(() => {
     getProducts();
@@ -19,15 +20,15 @@ export default function Home() {
     let count = 0;
     const maxCount = 10;
 
-    function sendHeight() {
-      const height = document.documentElement.scrollHeight;
+    const sendHeight = () => {
+      const height = scrollableRef.current?.scrollHeight || 0;
       window.parent.postMessage({ type: "setHeight", height }, "*");
       count++;
       if (count >= maxCount) clearInterval(timer);
-    }
+    };
 
-    const timer = setInterval(sendHeight, 1000); // 每秒发送一次
-    sendHeight(); // 页面加载时立即发一次
+    const timer = setInterval(sendHeight, 1000);
+    sendHeight();
 
     return () => clearInterval(timer);
   }, []);
@@ -66,34 +67,55 @@ export default function Home() {
   };
 
   return (
-    <Cellular>
-      {products.length > 0
-        ? products.map((product, index) => (
-            <div
-              className="image-wrapper"
-              onClick={() => {
-                if (product?.Video_URL == null) return;
-                setCurrentProduct(product);
-                setShowPopup(true);
-              }}
-              key={product.SKU + index}
-            >
-              <motion.img
-                className="demo-image"
-                layoutId={product.SKU}
-                src={product.Image_URL}
-              />
-              {product?.Video_URL && <FaSearch className="icon" color="#888" />}
-            </div>
-          ))
-        : "Loading..."}
+    <div
+      className="page-wrapper"
+      style={{
+        margin: 0,
+        padding: 0,
+        overflow: "hidden", // 页面本身不滚动
+        background: "white",
+      }}
+    >
+      <Cellular
+        ref={scrollableRef}
+        style={{
+          maxHeight: "100vh",
+          overflowY: "scroll",
+          scrollbarWidth: "none", // Firefox
+          msOverflowStyle: "none", // IE 10+
+        }}
+        className="scrollable"
+      >
+        {products.length > 0
+          ? products.map((product, index) => (
+              <div
+                className="image-wrapper"
+                onClick={() => {
+                  if (product?.Video_URL == null) return;
+                  setCurrentProduct(product);
+                  setShowPopup(true);
+                }}
+                key={product.SKU + index}
+              >
+                <motion.img
+                  className="demo-image"
+                  layoutId={product.SKU}
+                  src={product.Image_URL}
+                />
+                {product?.Video_URL && (
+                  <FaSearch className="icon" color="#888" />
+                )}
+              </div>
+            ))
+          : "Loading..."}
 
-      {showPopup && (
-        <PopupWindow
-          product={currentProduct}
-          closePopup={() => setShowPopup(false)}
-        />
-      )}
-    </Cellular>
+        {showPopup && (
+          <PopupWindow
+            product={currentProduct}
+            closePopup={() => setShowPopup(false)}
+          />
+        )}
+      </Cellular>
+    </div>
   );
 }

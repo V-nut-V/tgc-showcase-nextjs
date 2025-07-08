@@ -11,7 +11,8 @@ export const Popup = styled.div`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  /* max-height:fit-content; */
+  /* height: 100vh; */
   overflow: hidden;
 
   .popup-container {

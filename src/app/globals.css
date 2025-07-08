@@ -5,16 +5,8 @@ html {
   height: 100%;
 }
 
-/* 藏起滚动条，但仍保留滚动功能（对现代浏览器兼容良好） */
-html, body {
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE 10+ */
-  overflow-y: scroll;          /* 强制保留滚动功能 */
-  background: white;           /* 保证背景和页面一致 */
-}
-
-body::-webkit-scrollbar {
-  display: none;               /* Chrome/Safari */
+.scrollable::-webkit-scrollbar {
+  display: none;
 }
 
 @media screen and (max-width: 2840px) {
