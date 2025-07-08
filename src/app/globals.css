@@ -3,7 +3,18 @@ html {
   box-sizing: border-box; 
   width: 100%;
   height: 100%;
-  overflow: hidden;
+}
+
+/* 藏起滚动条，但仍保留滚动功能（对现代浏览器兼容良好） */
+html, body {
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE 10+ */
+  overflow-y: scroll;          /* 强制保留滚动功能 */
+  background: white;           /* 保证背景和页面一致 */
+}
+
+body::-webkit-scrollbar {
+  display: none;               /* Chrome/Safari */
 }
 
 @media screen and (max-width: 2840px) {
@@ -50,7 +61,6 @@ body {
   color: var(--main-color);
   background: #ffffff;
   font-family: "myFont", sans-serif;
-  overflow: hidden;
   /* background: radial-gradient(circle,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(217, 242, 255, 1) 100%); */
 }
 
