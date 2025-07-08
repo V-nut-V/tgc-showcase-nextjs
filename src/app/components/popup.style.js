@@ -5,7 +5,7 @@ export const Popup = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;

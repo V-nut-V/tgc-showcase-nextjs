@@ -14,6 +14,22 @@ export default function Home() {
 
   useEffect(() => {
     getProducts();
+
+    // Send the height of the page to the parent window, for iframe resizing in Shopify website
+    let count = 0;
+    const maxCount = 10;
+
+    function sendHeight() {
+      const height = document.documentElement.scrollHeight;
+      window.parent.postMessage({ type: "setHeight", height }, "*");
+      count++;
+      if (count >= maxCount) clearInterval(timer);
+    }
+
+    const timer = setInterval(sendHeight, 1000); // 每秒发送一次
+    sendHeight(); // 页面加载时立即发一次
+
+    return () => clearInterval(timer);
   }, []);
 
   const getProducts = async () => {
