@@ -2,25 +2,25 @@
 import styled from "styled-components";
 
 export const Popup = styled.div`
-  position: fixed;
+  position: sticky;
+  grid-row: 1/2;
+  grid-column: 1/5;
   top: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(4px);
+  /* background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px); */
   display: flex;
+  min-height: 500px;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  /* max-height:fit-content; */
-  /* height: 100vh; */
   overflow: hidden;
 
   .popup-container {
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     background-color: white;
     border-radius: 1rem;
     overflow: hidden;
