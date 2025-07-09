@@ -92,9 +92,17 @@ export default function Home() {
                 className="image-wrapper"
                 onClick={() => {
                   if (product?.Video_URL == null) return;
-
                   const isEmbedded = typeof window !== "undefined" && window.top !== window.self;
-                  if (isEmbedded) return;
+                  if (isEmbedded) {
+                    window.parent.postMessage(
+                      {
+                        type: "openPopup",
+                        product,
+                      },
+                      "*"
+                    );
+                    return;
+                  }
 
                   setCurrentProduct(product);
                   setShowPopup(true);
