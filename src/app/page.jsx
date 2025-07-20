@@ -49,6 +49,12 @@ export default function Home() {
             Name
             SKU
             Date
+            Image {
+              url
+            }
+            Video {
+              url
+            }
             Image_URL
             Video_URL
             Description
@@ -92,7 +98,8 @@ export default function Home() {
                 className="image-wrapper"
                 onClick={() => {
                   if (product?.Video_URL == null) return;
-                  const isEmbedded = typeof window !== "undefined" && window.top !== window.self;
+                  const isEmbedded =
+                    typeof window !== "undefined" && window.top !== window.self;
                   if (isEmbedded) {
                     window.parent.postMessage(
                       {
@@ -112,7 +119,7 @@ export default function Home() {
                 <motion.img
                   className="demo-image"
                   layoutId={product.SKU}
-                  src={product.Image_URL}
+                  src={product?.Image?.url || product.Image_URL}
                 />
                 {product?.Video_URL && (
                   <FaSearch className="icon" color="#888" />
