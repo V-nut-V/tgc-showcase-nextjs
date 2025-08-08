@@ -49,12 +49,6 @@ export default function Home() {
             Name
             SKU
             Date
-            Image {
-              url
-            }
-            Video {
-              url
-            }
             Image_URL
             Video_URL
             Description

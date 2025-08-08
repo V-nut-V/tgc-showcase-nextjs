@@ -31,7 +31,7 @@ const PopupWindow = ({ product, closePopup }) => {
           <motion.img
             draggable="false"
             className="demo-pop"
-            src={product?.Image?.url || product?.Image_URL}
+            src={product?.Image_URL}
             layoutId={product?.SKU}
           />
           <h3>{product?.Name}</h3>
@@ -54,7 +54,7 @@ const PopupWindow = ({ product, closePopup }) => {
               height={height}
               width={width}
               url={
-                product?.Video?.url || product?.Video_URL ||
+                product?.Video_URL ||
                 "https://www.youtube.com/watch?v=FWepS03YbFU"
               }
             />
