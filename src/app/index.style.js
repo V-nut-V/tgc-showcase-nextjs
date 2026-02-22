@@ -6,7 +6,7 @@ export const Cellular = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
-  padding: 4rem;
+  padding: 1rem 2rem;
 
   .image-wrapper {
     position: relative;

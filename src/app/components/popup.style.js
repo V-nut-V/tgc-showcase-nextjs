@@ -13,6 +13,7 @@ export const Popup = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  z-index: 2;
   /* max-height:fit-content; */
 
   .popup-container {
