@@ -5,7 +5,7 @@ export const BackToTopBtn = styled.button`
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background-color: #0070f3;
+  background-color: rgba(111, 199, 245, 1);
   color: white;
   border: none;
   border-radius: 50%;
@@ -16,10 +16,10 @@ export const BackToTopBtn = styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  opacity: ${(props) => (props.visible ? "1" : "0")};
+  opacity: ${(props) => (props.$visible ? "1" : "0")};
   transition: opacity 0.3s ease-in-out;
 
   &:hover {
-    background-color: #005bb5;
+    background-color: rgba(111, 199, 245, 0.8);
   }
 `;

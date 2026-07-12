@@ -28,7 +28,7 @@ const BackToTopButton = () => {
   }, []);
 
   return (
-    <BackToTopBtn visible={visible} onClick={scrollToTop}>
+    <BackToTopBtn $visible={visible} onClick={scrollToTop}>
       <TbArrowBigUpFilled />
     </BackToTopBtn>
   );

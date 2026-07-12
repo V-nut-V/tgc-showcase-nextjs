@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import client from "@/lib/ApolloClient";
 import { gql } from "@apollo/client";
 import { motion } from "framer-motion";
@@ -11,7 +11,6 @@ import { Input, Select, Space } from "antd";
 import BackToTopButton from "./components/backToTopBtn.jsx";
 
 export default function Home() {
-  const [products, setProducts] = useState([]);
   const [originalProducts, setOriginalProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
@@ -29,7 +28,40 @@ export default function Home() {
     return "zh";
   });
 
+  const getProducts = async () => {
+    setLoading(true);
+    const {
+      data: { products },
+    } = await client.query({
+      query: gql`
+        query GetProducts($pagination: PaginationArg, $locale: I18NLocaleCode) {
+          products(pagination: $pagination, locale: $locale) {
+            documentId
+            Name
+            SKU
+            Date
+            Image_URL
+            Video_URL
+            Description
+            rank
+          }
+        }
+      `,
+      variables: {
+        locale: language,
+        pagination: {
+          limit: 9999,
+        },
+        status: "PUBLISHED",
+      },
+    });
+    setOriginalProducts(products);
+    setLoading(false);
+  };
+
   useEffect(() => {
+    // Fetch-on-mount/language-change pattern; intentionally sets loading state synchronously.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     getProducts();
 
     // Send the height of the page to the parent window, for iframe resizing in Shopify website
@@ -93,45 +125,10 @@ export default function Home() {
     });
   };
 
-  useEffect(() => {
-    // Get filtered list based on search
+  const products = useMemo(() => {
     const filtered = getFilteredList(originalProducts, search);
-    // Apply sort to filtered list
-    const sorted = applySortToList(filtered, sortOrder);
-    setProducts(sorted);
+    return applySortToList(filtered, sortOrder);
   }, [search, originalProducts, sortOrder]);
-
-  const getProducts = async () => {
-    setLoading(true);
-    const {
-      data: { products },
-    } = await client.query({
-      query: gql`
-        query GetProducts($pagination: PaginationArg, $locale: I18NLocaleCode) {
-          products(pagination: $pagination, locale: $locale) {
-            documentId
-            Name
-            SKU
-            Date
-            Image_URL
-            Video_URL
-            Description 
-            rank
-          }
-        }
-      `,
-      variables: {
-        locale: language,
-        pagination: {
-          limit: 9999,
-        },
-        status: "PUBLISHED",
-      },
-    });
-    setProducts(products);
-    setOriginalProducts(products);
-    setLoading(false);
-  };
 
   const handleSort = (value) => {
     setSortOrder(value);
